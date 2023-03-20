@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { useRef } from "react";
+import React, { useRef, memo } from "react";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
@@ -63,7 +63,7 @@ type SignOutProps = {
   user: User;
 };
 
-const SignOut = ({ open, setOpen, user }: SignOutProps) => {
+const SignOut = memo(({ open, setOpen, user }: SignOutProps) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
@@ -88,8 +88,8 @@ const SignOut = ({ open, setOpen, user }: SignOutProps) => {
           onClick={() => setOpen(!open)}
         />
         <Box className={classes.userDetails}>
-          <Typography color={'#555555'}>{user.email}</Typography>
-          <Typography color={'#6d6d6d'}>{user.username}</Typography>
+          <Typography color={"#555555"}>{user.email}</Typography>
+          <Typography color={"#6d6d6d"}>{user.username}</Typography>
         </Box>
       </Box>
       <Box className={classes.buttonContainer}>
@@ -105,6 +105,6 @@ const SignOut = ({ open, setOpen, user }: SignOutProps) => {
       </Box>
     </Box>
   ) : null;
-};
+});
 
 export default SignOut;

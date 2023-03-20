@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,memo } from "react";
 import {
   Box,
   Divider,
@@ -51,9 +51,10 @@ type SidebarProps = {
     route: string;
     item: string;
   }[];
+  username:string
 };
 
-const SideBar = ({ navItems }: SidebarProps) => {
+const SideBar = memo(({ navItems,username }: SidebarProps) => {
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -67,14 +68,17 @@ const SideBar = ({ navItems }: SidebarProps) => {
         {navItems?.map((e, i) => (
           <Link
             key={e.id}
-            to={`${e.route}/${localStorage.getItem("username")}`}
+            to={`${e.route}/${username}`}
             className={classes.link}
           >
             <ListItemButton
               className={classes.listItemButton}
               disableRipple
-              disableGutters
-              disableTouchRipple
+              sx={{
+                '&:hover':{
+                  background:'transparent'
+                }
+              }}
               selected={selectedIndex === i}
               onClick={() => handleListItemClick(i)}
             >
@@ -95,6 +99,6 @@ const SideBar = ({ navItems }: SidebarProps) => {
       </List>
     </Box>
   );
-};
+});
 
 export default SideBar;

@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import MapView from "./mapView";
+import {memo} from 'react';
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
@@ -40,7 +41,7 @@ type MapInfoProps = {
   user: User;
 };
 
-const MapInfo = ({ user }: MapInfoProps) => {
+const MapInfo = memo(({ user }: MapInfoProps) => {
   const classes = useStyles();
 
   return (
@@ -64,6 +65,6 @@ const MapInfo = ({ user }: MapInfoProps) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default MapInfo;

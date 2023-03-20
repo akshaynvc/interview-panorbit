@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,memo } from "react";
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import SignOut from "./signout";
@@ -49,7 +49,7 @@ type HeaderProps = {
   user: User;
 };
 
-const Header = ({ pagename, user }: HeaderProps) => {
+const Header = memo(({ pagename, user }: HeaderProps) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const title = pagename.charAt(0).toUpperCase() + pagename.slice(1);
@@ -74,6 +74,6 @@ const Header = ({ pagename, user }: HeaderProps) => {
       <SignOut open={open} setOpen ={setOpen} user={user}/>
     </Box>
   );
-};
+});
 
 export default Header;

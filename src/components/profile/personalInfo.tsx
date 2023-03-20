@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import UserInfo from "../base/info";
+import {memo } from 'react';
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
@@ -32,7 +33,7 @@ type PersonalInfoProps = {
   user: User;
 };
 
-const PersonalInfo = ({ user }: PersonalInfoProps) => {
+const PersonalInfo = memo(({ user }: PersonalInfoProps) => {
   const classes = useStyles();
 
   return (
@@ -54,6 +55,6 @@ const PersonalInfo = ({ user }: PersonalInfoProps) => {
       </Box>
     </>
   );
-};
+});
 
 export default PersonalInfo;

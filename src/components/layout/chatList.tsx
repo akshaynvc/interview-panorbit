@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,memo } from "react";
 import { Box, Typography } from "@mui/material";
 import {
   Chat as ChatIcon,
@@ -6,8 +6,12 @@ import {
   ArrowUpwardSharp as UpArrow,
 } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
+import ChatBox from "./chatBox";
 
 const useStyles = makeStyles(() => ({
+  mainContainer: {
+    position: "relative",
+  },
   container: {
     position: "fixed",
     bottom: 0,
@@ -48,15 +52,15 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     overflow: "auto",
     "&::-webkit-scrollbar": {
-        width: "8px",
-      },
-      "&::-webkit-scrollbar-thumb": {
-        borderRadius: "8px",
-        backgroundColor: "#F6F6F6",
-      },
-      "&::-webkit-scrollbar-track": {
-        marginRight: '20px'
-      }
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      borderRadius: "8px",
+      backgroundColor: "#F6F6F6",
+    },
+    "&::-webkit-scrollbar-track": {
+      marginRight: "20px",
+    },
   },
   listItem: {
     display: "flex",
@@ -73,6 +77,7 @@ const useStyles = makeStyles(() => ({
     "&.MuiTypography-root": {
       marginLeft: "1rem",
     },
+    cursor:'pointer'
   },
   chatActive: {
     height: "10px",
@@ -83,6 +88,10 @@ const useStyles = makeStyles(() => ({
     height: "2rem",
     width: "2rem",
     borderRadius: "50%",
+    cursor:'pointer'
+  },
+  icon: {
+    color: "#fff",
   },
 }));
 
@@ -90,52 +99,79 @@ type ChatListProps = {
   users: User[];
 };
 
-const ChatList = ({ users }: ChatListProps) => {
+type StateProps = {
+  name: string;
+  profilePic: string;
+};
+
+const ChatList = memo(({ users }: ChatListProps) => {
   const [expanded, setExpanded] = useState(false);
+  const [details, setDetails] = useState<StateProps>({
+    name: "",
+    profilePic: "",
+  });
+  const [active, setActive] = useState(false);
   const classes = useStyles();
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
-
+  const handleClick = (name: string, profilePic: string) => {
+    setDetails({
+      name: name,
+      profilePic: profilePic,
+    });
+    setActive(true);
+  };
   return (
-    <Box
-      className={classes.container}
-      sx={{
-        height: expanded ? "300px" : "40px",
-      }}
-     
-    >
-      <Box className={classes.chatBox}  onClick={toggleExpanded}>
-        <Box className={classes.chatIconContainer}>
-          <Box className={classes.chatTextContainer}>
-            <ChatIcon />
-            <Typography className={classes.chatText}>chat</Typography>
+    <>
+      <Box className={classes.mainContainer}>
+        <Box
+          className={classes.container}
+          sx={{
+            height: expanded ? "300px" : "40px",
+          }}
+        >
+          <Box className={classes.chatBox} onClick={toggleExpanded}>
+            <Box className={classes.chatIconContainer}>
+              <Box className={classes.chatTextContainer}>
+                <ChatIcon className={classes.icon} />
+                <Typography className={classes.chatText}>chat</Typography>
+              </Box>
+              {expanded ? (
+                <DownArrow className={classes.icon} />
+              ) : (
+                <UpArrow className={classes.icon} />
+              )}
+            </Box>
           </Box>
-          {expanded ? <DownArrow /> : <UpArrow />}
+          <Box className={classes.chatListContainer}>
+            {users?.map((e: User) => (
+              <Box className={classes.listItem} key={e.id}>
+                <Box className={classes.imageContainer}>
+                  <Box
+                    component={"img"}
+                    src={e.profilepicture}
+                    className={classes.profilePic}
+                    onClick={() => handleClick(e.name, e.profilepicture)}
+                  />
+                  <Box  onClick={() => handleClick(e.name, e.profilepicture)}>
+                    <Typography className={classes.name}>{e.name}</Typography>
+                  </Box>
+                </Box>
+                <Box
+                  className={classes.chatActive}
+                  sx={{
+                    background: e.name.includes("a") ? "#D4D4D4" : "green",
+                  }}
+                />
+              </Box>
+            ))}
+          </Box>
         </Box>
       </Box>
-      <Box className={classes.chatListContainer}>
-        {users?.map((e: User) => (
-          <Box className={classes.listItem} key={e.id}>
-            <Box className={classes.imageContainer}>
-              <Box
-                component={"img"}
-                src={e.profilepicture}
-                className={classes.profilePic}
-              />
-              <Typography className={classes.name}>{e.name}</Typography>
-            </Box>
-            <Box
-              className={classes.chatActive}
-              sx={{
-                background: "#D4D4D4",
-              }}
-            />
-          </Box>
-        ))}
-      </Box>
-    </Box>
+      <ChatBox userDetails={details} active={active} setActive={setActive}/>
+    </>
   );
-};
+});
 
 export default ChatList;

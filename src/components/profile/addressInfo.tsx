@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import {memo} from 'react';
 import UserInfo from "../base/info";
 import MapInfo from "./mapInfo";
 import { makeStyles } from "@mui/styles";
@@ -21,7 +22,7 @@ type AddressInfoProps = {
   user: User;
 };
 
-const AddressInfo = ({ user }: AddressInfoProps) => {
+const AddressInfo = memo(({ user }: AddressInfoProps) => {
   const classes = useStyles();
 
   return (
@@ -36,6 +37,6 @@ const AddressInfo = ({ user }: AddressInfoProps) => {
       <MapInfo user={user} />
     </>
   );
-};
+});
 
 export default AddressInfo;

@@ -64,7 +64,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Box className={classes.container}>
-        <SideBar navItems={navItems} />
+        <SideBar navItems={navItems} username={username} />
         <Box className={classes.sectionContainer}>
           <Header pagename={pagename} user={user} />
           <Box className={classes.pageContainer}>{children}</Box>
