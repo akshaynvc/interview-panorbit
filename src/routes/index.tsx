@@ -4,14 +4,13 @@ import {
   Routes,
   RouteProps,
 } from "react-router-dom";
-import { Suspense, lazy } from "react";
-import HomePage from "../pages/home.page";
-import Loader from "../components/base/loader";
+import HomePage from "../pages/homePage";
+import ProfilePage from "../pages/profilePage";
+import PostsPage from "../pages/postsPage";
+import GalleryPage from "../pages/galleryPage";
+import TodoPage from "../pages/todoPage";
 
-const Profile = lazy(() => import("../pages/profile.page"));
-const Posts = lazy(() => import("../pages/posts.page"));
-const Gallery = lazy(() => import("../pages/gallery.page"));
-const Todo = lazy(() => import("../pages/todo.page"));
+
 
 const appRoutes: RouteProps[] = [
   {
@@ -20,19 +19,19 @@ const appRoutes: RouteProps[] = [
   },
   {
     path: "/profile/:id",
-    element: <Profile />,
+    element: <ProfilePage />,
   },
   {
-    path: "/posts",
-    element: <Posts />,
+    path: "/posts/:id",
+    element: <PostsPage />,
   },
   {
-    path: "/gallery",
-    element: <Gallery />,
+    path: "/gallery/:id",
+    element: <GalleryPage />,
   },
   {
-    path: "/todo",
-    element: <Todo />,
+    path: "/todo/:id",
+    element: <TodoPage />,
   },
 ];
 
@@ -43,8 +42,7 @@ const Navigation = () => (
         return (
           <Route
             key={route.path}
-            path={route.path}
-            element={<Suspense fallback={<Loader />}>{route.element}</Suspense>}
+            {...route}
           />
         );
       })}

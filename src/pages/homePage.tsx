@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import BannerSVG from "../components/base/banner";
+import BannerSVG from "../components/home/banner";
 import { fetchUsers } from "../redux/thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { selector } from "../redux/selector";
-import EmailListModal from "../components/emaillist.container";
+import EmailListModal from "../components/home/emaillistContainer";
 
 const useStyles = makeStyles<Theme>(() => ({
   container: {
@@ -20,7 +20,6 @@ const useStyles = makeStyles<Theme>(() => ({
 const HomePage: React.FC = () => {
   const classes = useStyles();
   const dispatch: AppDispatch = useDispatch();
-
   const { users, isLoading } = useSelector(selector);
 
   useEffect(() => {

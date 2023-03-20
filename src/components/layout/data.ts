@@ -1,0 +1,22 @@
+export const navItems = [
+    {
+        id:'1',
+        item:'Profile',
+        route:'/profile'
+    },
+    {
+        id:'2',
+        item:'Posts',
+        route:'/posts'
+    },
+    {
+        id:'3',
+        item:'Gallery',
+        route:'/gallery'
+    },
+    {
+        id:'4',
+        item:'Todo',
+        route:'/todo'
+    }
+]

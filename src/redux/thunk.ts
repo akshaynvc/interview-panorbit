@@ -1,10 +1,13 @@
-import {  createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const url = 'https://panorbit.in/api/users.json'
+const url = "https://panorbit.in/api/users.json";
 
-export const fetchUsers = createAsyncThunk('posts/fetchPosts', async () => {
+export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+  try {
     const response = await axios.get(url);
-    console.log(response.data?.users)
     return response?.data?.users;
-  });
+  } catch (error: any) {
+    return Promise.reject(error.message);
+  }
+});

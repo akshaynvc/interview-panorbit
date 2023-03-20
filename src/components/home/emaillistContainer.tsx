@@ -1,7 +1,7 @@
 import { Typography, Grid, Box } from "@mui/material";
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import Loader from "./base/loader";
+import Loader from "../base/loader";
 import { Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 
@@ -47,6 +47,16 @@ const useStyles = makeStyles<Theme>((theme) => ({
     height: "500px",
     overflow: "auto",
     padding: "10px 30px",
+    "&::-webkit-scrollbar": {
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      borderRadius: "8px",
+      backgroundColor: "#F6F6F6",
+    },
+    "&::-webkit-scrollbar-track": {
+      marginRight: '20px'
+    }
   },
   emailListItem: {
     display: "flex",
@@ -70,10 +80,7 @@ const useStyles = makeStyles<Theme>((theme) => ({
     "&:hover": {
       color: "#727272",
     },
-    marginLeft: "10px",
-    "&.MuiTypography-root": {
-      fontWeight: 800,
-    },
+    zIndex: 1,
   },
 }));
 
@@ -103,6 +110,7 @@ const EmailListModal = memo(({ isLoading, users }: EmailListModalProps) => {
                     <Box
                       component="img"
                       src={e.profilepicture}
+                      alt="profilePic"
                       className={classes.emailListItemImage}
                     />
                   </Link>
